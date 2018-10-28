@@ -1,0 +1,57 @@
+---
+- name: Install NGINX
+  yum:
+    name: nginx
+    state: latest
+
+- name: Install mod_ssl
+  yum:
+    name: mod_ssl
+    state: latest
+
+- name: Install passlib for htpasswd
+  pip:
+    name: passlib
+
+- name: set up es_user password
+  htpasswd:
+    path: /etc/nginx/.htpasswd
+    name: "{{ es_user }}"
+    password: "{{ es_password }}"
+
+- name: copy in key
+  copy:
+    src: nginx.key
+    dest: /etc/nginx/ssl/
+  
+- name: copy in crt
+  copy:
+    src: nginx.crt
+    dest: /etc/nginx/ssl/
+
+- name: copy in dhparam
+  copy:
+    src: dhparam.pem
+    dest: /etc/nginx/ssl/
+
+- name: copy in nginx conf file
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/
+
+- name: Open up SSL port in IPTables
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 443
+    ctstate: NEW
+    syn: match
+    jump: ACCEPT
+    comment: Accept new HTTPS connections
+
+- name: Start NGINX
+  service:
+    name: nginx
+    state: started
+
+

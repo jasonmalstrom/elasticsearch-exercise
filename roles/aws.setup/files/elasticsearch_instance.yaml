@@ -1,0 +1,68 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation templete to spin up an instance for elasticsearch'
+Parameters:
+  KeyName:
+    Description: Existing KeyPair
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be existing KeyPair
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.micro
+  SSHLocation:
+    Description: Lock down SSH access
+    Type: String
+    Default: 0.0.0.0/0
+  ImageId:
+    Description: AMI to spin up from
+    Type: String
+    Default: ami-0ff8a91507f77f867
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType:
+        Ref: InstanceType
+      SecurityGroups:
+      - Ref: InstanceSecurityGroup
+      KeyName:
+        Ref: KeyName
+      ImageId:
+        Ref: ImageId
+      Tags:
+      -
+        Key: Name
+        Value: Elasticsearch
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH Access
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp:
+          Ref: SSHLocation
+      - IpProtocol: tcp
+        FromPort: '9200'
+        ToPort: '9200'
+        CidrIp:
+          Ref: SSHLocation
+Outputs:
+  InstanceId:
+    Description: InstanceId
+    Value:
+      Ref: EC2Instance
+  PublicDNS:
+    Description: Public DNS
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - PublicDnsName
+  PublicIP:
+    Description: Public IP
+    Value:
+      Fn::GetAtt:
+      - EC2Instance
+      - PublicIp

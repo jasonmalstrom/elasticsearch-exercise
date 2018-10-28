@@ -1,0 +1,19 @@
+---
+
+- name: AWS related tasks
+  hosts: local
+  roles:
+  - { role: aws.setup, tags: ["aws"] }
+
+- name: Instance related tasks
+  hosts: all:!local
+  become: yes
+  roles:
+  - { role: java.install, tags: ["java", "elasticsearch", "es"] }
+  - { role: elasticsearch.install, tags: ["elasticsearch", "es"] }
+  - { role: nginx-proxy.install, tags: ["elasticsearch", "es"] }
+
+- name: Testing related tasks
+  hosts: local
+  roles:
+  - { role: elasticsearch.test, tags: ["test" ] }

@@ -1,0 +1,60 @@
+---
+- name: Add rpm GPG key
+  rpm_key:
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: Add Elasticsearch Repo
+  copy:
+    src: elasticsearch.repo    
+    dest: /etc/yum.repos.d/
+
+- name: Install Elasticsearch
+  yum: 
+    name: elasticsearch
+    state: latest  
+
+- name: Update jvm options to fit on t2 instances
+  template:
+    src: jvm.install.j2
+    dest: /etc/elasticsearch/jvm.install
+
+- name: Update jvm options to fit on t2 instances
+  template:
+    src: jvm.options.j2
+    dest: /etc/elasticsearch/jvm.options
+
+- name: Update jvm options to fit on t2 instances
+  template:
+    src: java.install.j2
+    dest: /etc/elasticsearch/java.install
+
+- name: Import Elastiscsearch settings
+  copy:
+    src: elasticsearch.yml
+    dest: /etc/elasticsearch/elasticsearch.yml
+
+- name: set limits to work with Elasticsearch
+  pam_limits:
+    domain: elasticsearch
+    limit_item: nproc
+    limit_type: '-'
+    value: 4096
+
+#- elasticsearch_plugin:
+#    name: com.floragunn:search-guard-6:6.4.2-23.1
+#    state: present
+#    force: yes
+
+- name: Start and Enable Elasticsearch on boot
+  service:
+    name: elasticsearch
+    state: started
+
+# Leaving this code commented out in case the need to install on a systemd box come along
+
+#- name: Enable Elasticsearch on boot
+#  systemd:
+#    name: elasticsearch
+#    state: started
+#    enabled: yes

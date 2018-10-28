@@ -1,0 +1,10 @@
+---
+- name: remove default java
+  yum:
+    name: java
+    state: absent
+
+- name: install java
+  yum: 
+    name: "{{ java }}"
+    state: present  

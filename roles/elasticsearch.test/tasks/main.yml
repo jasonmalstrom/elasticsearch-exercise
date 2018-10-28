@@ -1,0 +1,13 @@
+---
+- name: Test Elasticsearch to verify it running
+  uri:
+    url: https://{{ ip_address }}/
+    method: GET
+    return_content: yes
+    user: "{{ es_user }}"
+    password: "{{ es_password }}"
+    validate_certs: no
+  register: response
+  failed_when: "'cluster_name' not in response.content"
+  
+

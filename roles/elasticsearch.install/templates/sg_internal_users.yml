@@ -1,0 +1,6 @@
+{{ es_user }}:
+  hash: {{ es_password }}
+  roles:
+    - readall
+    - writeall
+

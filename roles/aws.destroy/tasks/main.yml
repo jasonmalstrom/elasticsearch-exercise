@@ -1,0 +1,5 @@
+---
+- name: destroy AWS resources
+  cloudformation:
+    stack_name: "Elasticsearch"
+    state: "absent"
