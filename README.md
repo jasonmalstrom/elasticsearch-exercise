@@ -85,16 +85,16 @@ If I was do start fresh, I would have started with autoscaling packer made image
 
 ##  Resources
 
-https://docs.ansible.com/
-https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance.html
-https://www.elastic.co/guide/en/elastic-stack/current/index.html
-https://docs.search-guard.com/latest/search-guard-community-edition
-https://www.elastic.co/guide/en/elasticsearch/reference/master/max-number-of-threads.html
-https://hostpresto.com/community/tutorials/install-and-secure-nginx-on-centos-7/
-https://stackoverflow.com/questions/38423219/ansible-this-module-requires-the-passlib-python-library
-https://www.packer.io/docs/builders/amazon-ebs.html
-https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-autoscaling.html
-https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-launchconfig.html
+- https://docs.ansible.com/
+- https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance.html
+- https://www.elastic.co/guide/en/elastic-stack/current/index.html
+- https://docs.search-guard.com/latest/search-guard-community-edition
+- https://www.elastic.co/guide/en/elasticsearch/reference/master/max-number-of-threads.html
+- https://hostpresto.com/community/tutorials/install-and-secure-nginx-on-centos-7/
+- https://stackoverflow.com/questions/38423219/ansible-this-module-requires-the-passlib-python-library
+- https://www.packer.io/docs/builders/amazon-ebs.html
+- https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-autoscaling.html
+- https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-launchconfig.html
 
 ## Feedback
 
