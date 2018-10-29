@@ -50,6 +50,7 @@
   service:
     name: elasticsearch
     state: started
+    enabled: yes
 
 # Leaving this code commented out in case the need to install on a systemd box come along
 

@@ -4,7 +4,7 @@
     stack_name: "Elasticsearch"
     state: "present"
     region: "{{ aws_region }}"
-    template: "{{ role_path }}/files/elasticsearch_instance.yaml"
+    template: "{{ role_path }}/files/elasticsearch_cluster.yaml"
     template_parameters: 
       KeyName: "{{ my_key }}"
       InstanceType: "{{ instance_type }}"

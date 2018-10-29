@@ -19,21 +19,26 @@ Parameters:
     Type: String
     Default: ami-0ff8a91507f77f867
 Resources:
-  EC2Instance:
-    Type: AWS::EC2::Instance
+  ElasticsearchCluster:
+    Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      InstanceType:
-        Ref: InstanceType
+      AvailabilityZones:
+        Fn::GetAZs: ''
+      LaunchConfigurationName: 
+        Ref: ClusterConfig
+      DesiredCapacity: 1
+      MaxSize: 1
+      MinSize: 1
+  ClusterConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: ami-0cd27db22c04f7033
       SecurityGroups:
       - Ref: InstanceSecurityGroup
+      InstanceType: 
+        Ref: InstanceType
       KeyName:
         Ref: KeyName
-      ImageId:
-        Ref: ImageId
-      Tags:
-      -
-        Key: Name
-        Value: Elasticsearch
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -49,20 +54,3 @@ Resources:
         ToPort: '443'
         CidrIp:
           Ref: SSHLocation
-Outputs:
-  InstanceId:
-    Description: InstanceId
-    Value:
-      Ref: EC2Instance
-  PublicDNS:
-    Description: Public DNS
-    Value:
-      Fn::GetAtt:
-      - EC2Instance
-      - PublicDnsName
-  PublicIP:
-    Description: Public IP
-    Value:
-      Fn::GetAtt:
-      - EC2Instance
-      - PublicIp

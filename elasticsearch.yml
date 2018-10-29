@@ -1,0 +1,8 @@
+- name: Instance related tasks
+  hosts: all:!local
+  become: yes
+  roles:
+  - { role: java.install, tags: ["java", "elasticsearch", "es"] }
+  - { role: elasticsearch.install, tags: ["elasticsearch", "es"] }
+  - { role: nginx-proxy.install, tags: ["elasticsearch", "es"] }
+
